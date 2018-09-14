@@ -1,0 +1,81 @@
+#! /usr/local/bin/vvp
+:ivl_version "10.1 (stable)" "(v10_1-107-gab6ae79)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision + 0;
+:vpi_module "system";
+:vpi_module "vhdl_sys";
+:vpi_module "v2005_math";
+:vpi_module "va_math";
+S_0x1c9b360 .scope module, "demorgan_test" "demorgan_test" 2 3;
+ .timescale 0 0;
+v0x1cc1cd0_0 .var "A", 0 0;
+v0x1cc1d90_0 .net "ABinv", 0 0, L_0x1cc2b50;  1 drivers
+v0x1cc1e60_0 .net "AandBinv", 0 0, L_0x1cc2690;  1 drivers
+v0x1cc1f60_0 .net "AnotB", 0 0, L_0x1cc27a0;  1 drivers
+v0x1cc2030_0 .var "B", 0 0;
+v0x1cc20d0_0 .net "nA", 0 0, L_0x1cc2340;  1 drivers
+v0x1cc21a0_0 .net "nAandnB", 0 0, L_0x1cc2560;  1 drivers
+v0x1cc2270_0 .net "nB", 0 0, L_0x1cc2450;  1 drivers
+S_0x1caaff0 .scope module, "dut" "demorgan" 2 9, 3 1 0, S_0x1c9b360;
+ .timescale 0 0;
+    .port_info 0 /INPUT 1 "A"
+    .port_info 1 /INPUT 1 "B"
+    .port_info 2 /OUTPUT 1 "nA"
+    .port_info 3 /OUTPUT 1 "nB"
+    .port_info 4 /OUTPUT 1 "nAandnB"
+    .port_info 5 /OUTPUT 1 "AandBinv"
+    .port_info 6 /OUTPUT 1 "AnotB"
+    .port_info 7 /OUTPUT 1 "ABinv"
+L_0x1cc2340 .functor NOT 1, v0x1cc1cd0_0, C4<0>, C4<0>, C4<0>;
+L_0x1cc2450 .functor NOT 1, v0x1cc2030_0, C4<0>, C4<0>, C4<0>;
+L_0x1cc2560 .functor AND 1, L_0x1cc2340, L_0x1cc2450, C4<1>, C4<1>;
+L_0x1cc2620 .functor AND 1, v0x1cc1cd0_0, v0x1cc2030_0, C4<1>, C4<1>;
+L_0x1cc2690 .functor NOT 1, L_0x1cc2620, C4<0>, C4<0>, C4<0>;
+L_0x1cc27a0 .functor OR 1, L_0x1cc2340, L_0x1cc2450, C4<0>, C4<0>;
+L_0x1cc29c0 .functor OR 1, v0x1cc1cd0_0, v0x1cc2030_0, C4<0>, C4<0>;
+L_0x1cc2b50 .functor NOT 1, L_0x1cc29c0, C4<0>, C4<0>, C4<0>;
+v0x1cab240_0 .net "A", 0 0, v0x1cc1cd0_0;  1 drivers
+v0x1cc1420_0 .net "ABinv", 0 0, L_0x1cc2b50;  alias, 1 drivers
+v0x1cc14e0_0 .net "AandBinv", 0 0, L_0x1cc2690;  alias, 1 drivers
+v0x1cc15b0_0 .net "AnotB", 0 0, L_0x1cc27a0;  alias, 1 drivers
+v0x1cc1670_0 .net "AoB", 0 0, L_0x1cc29c0;  1 drivers
+v0x1cc1780_0 .net "B", 0 0, v0x1cc2030_0;  1 drivers
+v0x1cc1840_0 .net "andA1", 0 0, L_0x1cc2620;  1 drivers
+v0x1cc1900_0 .net "nA", 0 0, L_0x1cc2340;  alias, 1 drivers
+v0x1cc19c0_0 .net "nAandnB", 0 0, L_0x1cc2560;  alias, 1 drivers
+v0x1cc1b10_0 .net "nB", 0 0, L_0x1cc2450;  alias, 1 drivers
+    .scope S_0x1c9b360;
+T_0 ;
+    %vpi_call 2 14 "$display", "A B | ~A ~B | ~A~B | ~(A + B) | ~(AB) | (~A + ~B)" {0 0 0};
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x1cc1cd0_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x1cc2030_0, 0, 1;
+    %delay 1, 0;
+    %vpi_call 2 16 "$display", "%b %b |  %b  %b |    %b  |       %b |     %b |        %b  ", v0x1cc1cd0_0, v0x1cc2030_0, v0x1cc20d0_0, v0x1cc2270_0, v0x1cc21a0_0, v0x1cc1d90_0, v0x1cc1e60_0, v0x1cc1f60_0 {0 0 0};
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x1cc1cd0_0, 0, 1;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x1cc2030_0, 0, 1;
+    %delay 1, 0;
+    %vpi_call 2 18 "$display", "%b %b |  %b  %b |    %b  |       %b |     %b |        %b  ", v0x1cc1cd0_0, v0x1cc2030_0, v0x1cc20d0_0, v0x1cc2270_0, v0x1cc21a0_0, v0x1cc1d90_0, v0x1cc1e60_0, v0x1cc1f60_0 {0 0 0};
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x1cc1cd0_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x1cc2030_0, 0, 1;
+    %delay 1, 0;
+    %vpi_call 2 20 "$display", "%b %b |  %b  %b |    %b  |       %b |     %b |        %b  ", v0x1cc1cd0_0, v0x1cc2030_0, v0x1cc20d0_0, v0x1cc2270_0, v0x1cc21a0_0, v0x1cc1d90_0, v0x1cc1e60_0, v0x1cc1f60_0 {0 0 0};
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x1cc1cd0_0, 0, 1;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x1cc2030_0, 0, 1;
+    %delay 1, 0;
+    %vpi_call 2 22 "$display", "%b %b |  %b  %b |    %b  |       %b |     %b |        %b  ", v0x1cc1cd0_0, v0x1cc2030_0, v0x1cc20d0_0, v0x1cc2270_0, v0x1cc21a0_0, v0x1cc1d90_0, v0x1cc1e60_0, v0x1cc1f60_0 {0 0 0};
+    %end;
+    .thread T_0;
+# The file index is used to find the file name in the following table.
+:file_names 4;
+    "N/A";
+    "<interactive>";
+    "hw1.t.v";
+    "./hw1.v";
